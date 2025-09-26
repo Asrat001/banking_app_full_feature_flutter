@@ -8,9 +8,9 @@ A comprehensive Flutter banking application built with BLoC state management, de
 |---------------------------------|---------------------------------|---------------------------------|
 | ![1](assets/screenshoots/1.png) | ![2](assets/screenshoots/2.png) | ![3](assets/screenshoots/3.png) |
 
-| 4                               | 5                               | 6                                |
-|---------------------------------|---------------------------------|----------------------------------|
-| ![4](assets/screenshoots/4.png) | ![5](assets/screenshoots/5.png) | ![6](assets/Sscreenshoots/6.png) |
+| 4                               | 5                               | 6                               |
+|---------------------------------|---------------------------------|---------------------------------|
+| ![4](assets/screenshoots/4.png) | ![5](assets/screenshoots/5.png) | ![6](assets/screenshoots/6.png) |
 
 | 7                               |                                  
 |---------------------------------|
