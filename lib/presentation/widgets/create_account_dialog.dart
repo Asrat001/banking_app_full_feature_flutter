@@ -39,6 +39,7 @@ class _CreateAccountDialogState extends State<CreateAccountDialog> {
     super.dispose();
   }
 
+  //todo: refactor this method to use bloc
   Future<void> _createAccount() async {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
