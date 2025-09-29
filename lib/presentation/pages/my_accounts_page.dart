@@ -11,9 +11,7 @@ import '../bloc/account/account_state.dart';
 import '../bloc/transaction/transaction_bloc.dart';
 import '../bloc/transaction/transaction_event.dart';
 import '../bloc/transaction/transaction_state.dart';
-import '../../domain/entities/transaction.dart';
-import '../../domain/entities/transaction_enums.dart';
-import 'transaction_detail_page.dart';
+
 
 class MyAccountsPage extends StatefulWidget {
 
@@ -41,7 +39,6 @@ class _MyAccountsPageState extends State<MyAccountsPage> {
       body: SafeArea(
         child: Column(
           children: [
-
             // Main Content
             Expanded(
               child: BlocBuilder<AccountBloc, AccountState>(
@@ -570,121 +567,5 @@ class _MyAccountsPageState extends State<MyAccountsPage> {
     );
   }
 
-  Widget _buildCompactTransactionItem(Transaction transaction) {
-    IconData icon;
-    String title;
 
-    switch (transaction.type) {
-      case TransactionType.FUND_TRANSFER:
-        icon = Icons.swap_horiz;
-        title = 'Fund Transfer';
-        break;
-      case TransactionType.BILL_PAYMENT:
-        icon = Icons.receipt_outlined;
-        title = 'Bill Payment';
-        break;
-      case TransactionType.ATM_WITHDRAWAL:
-        icon = Icons.atm;
-        title = 'ATM Withdrawal';
-        break;
-      case TransactionType.TELLER_DEPOSIT:
-        icon = Icons.account_balance;
-        title = 'Deposit';
-        break;
-      case TransactionType.PURCHASE:
-        icon = Icons.shopping_cart_outlined;
-        title = 'Purchase';
-        break;
-      case TransactionType.INTEREST_EARNED:
-        icon = Icons.trending_up;
-        title = 'Interest';
-        break;
-      default:
-        icon = Icons.receipt_outlined;
-        title = transaction.type.displayName;
-    }
-
-    if (transaction.description.isNotEmpty) {
-      title = transaction.description;
-    }
-
-    final isDebit = transaction.direction.isDebit;
-    final amountPrefix = isDebit ? '-' : '+';
-    final amount = '$amountPrefix ETB ${transaction.amount.toStringAsFixed(2)}';
-
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(
-              providers: [
-                BlocProvider.value(
-                  value: context.read<AccountBloc>(),
-                ),
-              ],
-              child: TransactionDetailPage(transaction: transaction),
-            ),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Row(
-          children: [
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: const Color(0xFFF0F0F5)),
-              ),
-              child: Icon(
-                icon,
-                color: Colors.grey,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 15),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF2D3748),
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  if (transaction.relatedAccount != null) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      'To: ${transaction.relatedAccount}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            Text(
-              amount,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF2D3748),
-                // isDebit ? Colors.red : Colors.green,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

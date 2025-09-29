@@ -11,6 +11,7 @@ class AppTextField extends StatelessWidget {
   final TextInputType keyboardType ;
   final VoidCallback? onSuffixTap;
   final List<TextInputFormatter>? textInputFormatter;
+  final String prefixText;
 
   const AppTextField({
     super.key,
@@ -22,7 +23,8 @@ class AppTextField extends StatelessWidget {
     this.onSuffixTap,
     this.keyboardType = TextInputType.text,
     this.errorMaxLines=1,
-    this.textInputFormatter
+    this.textInputFormatter,
+    this.prefixText=""
   });
 
   @override
@@ -35,6 +37,11 @@ class AppTextField extends StatelessWidget {
       inputFormatters:textInputFormatter,
       decoration: InputDecoration(
         hintText: hint,
+        prefixText: prefixText,
+        prefixStyle: const TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.w600,
+        ),
         hintStyle: const TextStyle(fontSize: 14),
         filled: false,
         errorMaxLines:errorMaxLines ,

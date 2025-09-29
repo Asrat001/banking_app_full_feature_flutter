@@ -18,6 +18,7 @@ import '../bloc/transaction/transaction_event.dart';
 import '../bloc/auth/auth_bloc.dart';
 import '../bloc/auth/auth_state.dart';
 
+//todo:use shell route for bottom navigation instead of maintaining state here (need to refactor auth flow to use go router first)
 class MainScreen extends StatefulWidget {
   final ApiClient apiClient;
 
@@ -29,7 +30,7 @@ class MainScreen extends StatefulWidget {
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
-
+//todo: refactor to use go router shell route for bottom navigation
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 

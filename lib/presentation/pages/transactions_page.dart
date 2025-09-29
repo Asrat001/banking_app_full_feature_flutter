@@ -357,6 +357,9 @@ class _TransactionsPageState extends State<TransactionsPage> {
     );
   }
 
+  /// Builds a section for a specific date with its transactions.
+  /// [date] is the date label (e.g., "Today", "Yesterday").
+  /// Todo: [transactions] use listview builder to optimize performance
   Widget _buildDateSection(String date, List<Widget> transactions) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

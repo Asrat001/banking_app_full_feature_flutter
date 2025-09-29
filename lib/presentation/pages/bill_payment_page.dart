@@ -1,13 +1,16 @@
+import 'package:banking_app_challenge/presentation/bloc/account/account_bloc.dart';
 import 'package:banking_app_challenge/presentation/widgets/app_lable.dart';
 import 'package:banking_app_challenge/presentation/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../core/network/api_client.dart';
 import '../../core/constants/api_constants.dart';
 import '../../data/datasources/account_remote_datasource.dart';
 import '../../data/repositories/account_repository_impl.dart';
 import '../../domain/entities/account.dart';
+import '../bloc/account/account_event.dart';
 import '../widgets/bill_payment_app_bar.dart';
 
 class BillPaymentPage extends StatefulWidget {
@@ -56,6 +59,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
     _loadAccounts();
   }
 
+  //todo: move to bloc
   Future<void> _loadAccounts() async {
     setState(() {
       _isLoading = true;
@@ -167,6 +171,7 @@ class _BillPaymentPageState extends State<BillPaymentPage> {
 
         // Show success dialog
         if (mounted) {
+          context.read<AccountBloc>().add(const LoadAccounts());
           showDialog(
             context: context,
             builder: (context) => AlertDialog(

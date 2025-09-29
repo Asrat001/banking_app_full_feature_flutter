@@ -332,7 +332,7 @@ class _HomeViewState extends State<HomeView> {
                                     ),
                                   );
                                 }
-
+                            // todo: we only show the two most recent transactions , but it's to use listview builder for better performance on lower end devices
                                 if (transactionState is TransactionLoaded) {
                                   final recentTransactions = transactionState
                                       .transactions

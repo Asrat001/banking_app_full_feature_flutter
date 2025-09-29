@@ -1,9 +1,9 @@
+import 'package:banking_app_challenge/presentation/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../core/network/api_client.dart';
-import '../../core/theme/app_colors.dart';
 import '../../data/datasources/account_remote_datasource.dart';
 import '../../data/repositories/account_repository_impl.dart';
 import '../../domain/entities/account.dart';
@@ -30,31 +30,7 @@ class _FundTransferPageState extends State<FundTransferPage> {
   final _toAccountController = TextEditingController();
   final _amountController = TextEditingController();
 
-  static const _textFieldDecoration = InputDecoration(
-    filled: false,
-    border: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Color(0xFFE5E7EB),
-      ),
-    ),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Color(0xFFE5E7EB),
-      ),
-    ),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Color(0xFF4A5568),
-        width: 2,
-      ),
-    ),
-    errorBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: Color(0xFFEF4444),
-        width: 2,
-      ),
-    ),
-  );
+
 
   List<Account> _accounts = [];
   Account? _selectedFromAccount;
@@ -89,7 +65,8 @@ class _FundTransferPageState extends State<FundTransferPage> {
     _loadAccounts();
     _amountController.text = '0.00';
   }
-
+//todo: handle pagination if user has many accounts
+// todo:refactor to use account bloc to load accounts instead of direct repository call
   Future<void> _loadAccounts() async {
     setState(() {
       _isLoading = true;
@@ -137,6 +114,7 @@ class _FundTransferPageState extends State<FundTransferPage> {
     super.dispose();
   }
 
+  //todo: refactor to use bloc event instead of direct repository call
   void _handleTransfer() {
     if (_formKey.currentState!.validate()) {
       if (_selectedFromAccount == null) {
@@ -457,18 +435,12 @@ class _FundTransferPageState extends State<FundTransferPage> {
                                           ],
                                         ),
                                         const SizedBox(height: 20),
-                                        TextField(
+                                        AppTextField(
                                           controller: _toAccountController,
-                                          decoration:
-                                              _textFieldDecoration.copyWith(
-                                            labelText: 'Account Number',
-                                          ),
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly,
-                                          ],
-                                          autofocus: true,
+                                          textInputFormatter: [    FilteringTextInputFormatter
+                                              .digitsOnly,],
+                                          hint: 'Enter account number',
                                         ),
                                         const SizedBox(height: 20),
                                         Row(
@@ -639,26 +611,15 @@ class _FundTransferPageState extends State<FundTransferPage> {
                             ),
 
                             const SizedBox(height: 12),
-                            TextFormField(
+                            AppTextField(
                               controller: _amountController,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              decoration: _textFieldDecoration.copyWith(
-                                prefixText: 'ETB',
-                                prefixStyle: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                              ),
+                              prefixText: "ETB",
+                              hint: '0.00',
                               keyboardType:
                                   const TextInputType.numberWithOptions(
                                 decimal: true,
                               ),
-                              inputFormatters: [
+                              textInputFormatter: [
                                 FilteringTextInputFormatter.allow(
                                   RegExp(r'^\d+\.?\d{0,2}'),
                                 ),
@@ -737,13 +698,6 @@ class _FundTransferPageState extends State<FundTransferPage> {
                 padding: const EdgeInsets.all(20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.black.withValues(alpha: 0.05),
-                  //     blurRadius: 10,
-                  //     offset: const Offset(0, -5),
-                  //   ),
-                  // ],
                 ),
                 child: SizedBox(
                   width: double.infinity,
